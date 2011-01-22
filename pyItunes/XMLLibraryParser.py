@@ -22,6 +22,8 @@ class XMLLibraryParser:
 		dicts = 0
 		songs = {}
 		inSong = False
+		inPlaylists = False
+		inPlaylist = False
 		for line in lines:
 			if re.search('<dict>',line):
 				dicts += 1
@@ -37,6 +39,11 @@ class XMLLibraryParser:
 			if dicts == 3  and re.search('<key>(.*?)</key>',line):
 				key,restOfLine = self.keyAndRestOfLine(line)
 				temp[key] = self.getValue(restOfLine)
-			if len(songs) > 0 and dicts < 2:
-				return songs
+			
+			if 'Playlists' in line:
+				inPlaylists = True
+			if inPlaylists and re.search('<key>(.*?)</key>',line):
+				key,restOfLine = self.keyAndRestOfLine(line)
+				if key == 'Name':
+					print key, self.getValue(restOfLine)
 		return songs
