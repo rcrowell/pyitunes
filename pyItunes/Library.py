@@ -1,10 +1,12 @@
 from pyItunes.Song import Song
+from pyItunes.Playlist import Playlist
 import time
 class Library:
-	def __init__(self,dictionary):
-		self.songs = self.parseDictionary(dictionary)
+	def __init__(self,songs,playlists):
+		self.songs = self.parseSongs(songs)
+		self.playlists = self.parsePlaylists(playlists,songs)
 
-	def parseDictionary(self,dictionary):
+	def parseSongs(self,dictionary):
 		songs = []
 		format = "%Y-%m-%dT%H:%M:%SZ"
 		for song,attributes in dictionary.iteritems():
@@ -39,3 +41,20 @@ class Library:
 				s.location = attributes.get('Location')			
 			songs.append(s)
 		return songs
+
+	def parsePlaylists(self,dictionary,songs):
+		playlists = []
+		for playlist,attributes in dictionary.iteritems():
+			p = Playlist()
+			p.name = attributes.get('Name')
+			p.visible = attributes.get('Visible')
+			p.allItems = attributes.get('All Items')
+			p.playlistPersistentId = attributes.get('Playlist Persistent Id')
+			p.playlistId = attributes.get('Playlist Id')
+
+			for songId in attributes.get('Playlist Items',[]):
+				p.songs.append(songs[songId])
+
+			playlists.append(p)
+
+		return playlists
