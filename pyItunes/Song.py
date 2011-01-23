@@ -1,6 +1,7 @@
 class Song:
 	"""
 	Song Attributes:
+	itunes_id (Integer)
 	name (String)
 	artist (String)
 	album_arist (String)
@@ -22,6 +23,7 @@ class Song:
 	play_count = None (Integer)
 	location = None (String)
 	"""
+	itunes_id = None
 	name = None
 	artist = None
 	album_arist = None

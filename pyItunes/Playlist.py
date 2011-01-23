@@ -1,4 +1,5 @@
 class Playlist:
+    itunes_id = None
     name = None
     visible = None
     playlistPersistentId = None
