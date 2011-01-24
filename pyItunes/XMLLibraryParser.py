@@ -63,5 +63,6 @@ class XMLLibraryParser:
 						playlist['Playlist Items'].append(self.getValue(restOfLine))
 					else:
 						playlist[key] = self.getValue(restOfLine)
-
+						
+		playlists[playlist['Playlist ID']] = playlist   # we always miss the last one; add it back here
 		return songs, playlists
